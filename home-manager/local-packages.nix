@@ -12,6 +12,7 @@
     _7zz
     telegram-desktop
     libreoffice-qt
+    gnupg
 
     # Tools
     lshw
