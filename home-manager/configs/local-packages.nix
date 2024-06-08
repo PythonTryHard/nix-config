@@ -17,7 +17,8 @@
 
     # Tools
     lshw
-
+    file
+    
     # CLI QoL
     eza
     btop
