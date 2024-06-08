@@ -12,7 +12,8 @@
     _7zz
     telegram-desktop
     libreoffice-qt
-    gnupg
+    sublime.sublime4
+    sublime-merge
 
     # Tools
     lshw

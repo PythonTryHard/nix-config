@@ -1,38 +1,50 @@
 # This is your system's configuration file.
 # Use this to configure your system environment (it replaces /etc/nixos/configuration.nix)
-{ inputs, lib, config, ...}:
-
 {
+  inputs,
+  outputs,
+  lib,
+  config,
+  pkgs,
+  ...
+}: {
   # You can import other NixOS modules here
   imports = [
-    # If you want to use modules from other flakes (such as nixos-hardware):
+    # If you want to use modules your own flake exports (from modules/nixos):
+    # outputs.nixosModules.example
+
+    # Or modules from other flakes (such as nixos-hardware):
     # inputs.hardware.nixosModules.common-cpu-amd
     # inputs.hardware.nixosModules.common-ssd
-
-    # You can also split up your configuration and import pieces of it here:
-    # ./users.nix
-
-    # Import your generated (nixos-generate-config) hardware configuration
-    ./audio.nix
-    ./bootloader-and-kernel.nix
-    ./date-and-time.nix
-    ./desktop-environment.nix
-    ./environment-variable.nix
-    ./fonts.nix
-    ./global-packages.nix
+    
+    # Partitions
     ./hardware-configuration.nix
-    ./hostname.nix
-    ./locale-and-keymap.nix
-    ./networking.nix
-    ./nvidia.nix
-    ./printing.nix
-    ./users.nix
+    
+    # System-wide configs
+    ./configs/audio.nix
+    ./configs/bootloader-and-kernel.nix
+    ./configs/date-and-time.nix
+    ./configs/desktop-environment.nix
+    ./configs/environment-variable.nix
+    ./configs/fonts.nix
+    ./configs/global-packages.nix
+    ./configs/hostname.nix
+    ./configs/locale-and-keymap.nix
+    ./configs/networking.nix
+    ./configs/nvidia.nix
+    ./configs/printing.nix
+    ./configs/users.nix
   ];
 
   nixpkgs = {
     # You can add overlays here
     overlays = [
-      # If you want to use overlays exported from other flakes:
+      # Add overlays your own flake exports (from overlays and pkgs dir):
+      outputs.overlays.additions
+      outputs.overlays.modifications
+      outputs.overlays.sublime-bypass
+
+      # You can also add overlays exported from other flakes:
       # neovim-nightly-overlay.overlays.default
 
       # Or define it inline, for example:
@@ -67,32 +79,6 @@
     registry = lib.mapAttrs (_: flake: {inherit flake;}) flakeInputs;
     nixPath = lib.mapAttrsToList (n: _: "${n}=flake:${n}") flakeInputs;
   };
-
-  # Enable touchpad support (enabled default in most desktopManager).
-  # services.libinput.enable = true;
-
-  # List services that you want to enable:
-
-  # Enable the OpenSSH daemon.
-  # services.openssh.enable = true;
-
-  # Copy the NixOS configuration file and link it from the resulting system
-  # (/run/current-system/configuration.nix). This is useful in case you
-  # accidentally delete configuration.nix.
-  system.copySystemConfiguration = false;
-
-  # This setups a SSH server. Very important if you're setting up a headless system.
-  # Feel free to remove if you don't need it.
-  #   services.openssh = {
-  #     enable = true;
-  #     settings = {
-  #       # Opinionated: forbid root login through SSH.
-  #       PermitRootLogin = "no";
-  #       # Opinionated: use keys only.
-  #       # Remove if you want to SSH using passwords
-  #       PasswordAuthentication = false;
-  #     };
-  #   };
 
   # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
   system.stateVersion = "24.05";

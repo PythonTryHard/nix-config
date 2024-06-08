@@ -18,6 +18,7 @@
       "workbench.iconTheme" = "catppuccin-mocha";
       "nix.enableLanguageServer" = true;
       "nix.serverPath" = "nil";
+      "vscode-note.notespath" = "~/.vscode-notes";
     };
   };
 }
