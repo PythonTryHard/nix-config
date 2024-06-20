@@ -10,9 +10,9 @@
   services.xserver.desktopManager.gnome.enable = true;
 
   # Plasma 6 :D
-  services.displayManager.sddm.enable = true;
-  services.desktopManager.plasma6.enable = true;
+  # services.displayManager.sddm.enable = true;
+  # services.desktopManager.plasma6.enable = true;
 
-  services.displayManager.defaultSession = "plasma";
-  services.displayManager.sddm.wayland.enable = true;
+  # services.displayManager.defaultSession = "plasma";
+  # services.displayManager.sddm.wayland.enable = true;
 }
